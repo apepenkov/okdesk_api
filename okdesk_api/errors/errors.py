@@ -52,7 +52,7 @@ def dict_errors_to_errors(in_errors: dict) -> list:
     return errors
 
 
-class OkDeskError(BaseException):
+class OkDeskError(Exception):
     def __init__(
         self,
         json_error: typing.Union[dict, list],
