@@ -5,7 +5,7 @@ import aiohttp
 
 from .. import types
 from ..errors import OkDeskError
-from ..api import companies, issues, maintenance_entities, shared
+from ..api import companies, issues, maintenance_entities, shared, equipments
 from .. import helpers
 import datetime
 
@@ -1143,5 +1143,175 @@ class OkDeskClient:
         return await self(
             issues.DeleteIssueRequest(
                 issue_id=issue_id,
+            )
+        )
+
+    # equipments
+    async def find_equipment(
+            self,
+            inventory_number: str = None,
+            serial_number: str = None,
+            search_string: str = None,
+    ) -> equipments.Equipment:
+        """
+
+        :param inventory_number: Inventory number of equipment (Инвентарный номер оборудования)
+        :param serial_number: Serial number of equipment (Серийный номер оборудования)
+        :param search_string: Search string (Искомая подстрока)
+        :return: Equipment (Оборудование)
+        """
+        return await self(
+            equipments.FindEquipmentRequest(
+                inventory_number=inventory_number,
+                serial_number=serial_number,
+                search_string=search_string,
+            )
+        )
+
+    async def create_equipment(
+            self,
+            equipment_type_code: str,
+            equipment_manufacturer_code: str = None,
+            equipment_model_code: typing.Optional[str] = None,
+            serial_number: typing.Optional[str] = None,
+            inventory_number: typing.Optional[str] = None,
+            comment: typing.Optional[str] = None,
+            company_id: typing.Optional[str] = None,
+            maintenance_entity_id: typing.Optional[str] = None,
+            parent_id: typing.Optional[str] = None,
+            custom_parameters: typing.Optional[dict] = None,
+            agreement_ids: typing.Optional[typing.List[int]] = None,
+    ) -> None:
+        """
+
+        :param equipment_type_code: Equipment type code (Код типа оборудования)
+        :param equipment_manufacturer_code: Equipment manufacturer code (Код производителя оборудования)
+        :param equipment_model_code: Equipment model code (Код модели оборудования)
+        :param serial_number: Serial number (Серийный номер)
+        :param inventory_number: Inventory number (Инвентарный номер)
+        :param comment: Comment (Комментарий)
+        :param company_id: Company ID (ID компании, привязанной к оборудованию)
+        :param maintenance_entity_id: Maintenance entity ID (ID объекта обслуживания, к которому привязано оборудование)
+        :param parent_id: Parent ID (ID головного оборудования)
+        :param custom_parameters: Custom parameters (Дополнительные атрибуты оборудования)
+        :param agreement_ids: Agreement IDs (Набор ID договоров оборудования)
+        """
+        return await self(
+            equipments.CreateEquipmentRequest(
+                equipment_type_code=equipment_type_code,
+                equipment_manufacturer_code=equipment_manufacturer_code,
+                equipment_model_code=equipment_model_code,
+                serial_number=serial_number,
+                inventory_number=inventory_number,
+                comment=comment,
+                company_id=company_id,
+                maintenance_entity_id=maintenance_entity_id,
+                parent_id=parent_id,
+                custom_parameters=custom_parameters,
+                agreement_ids=agreement_ids,
+            )
+        )
+
+    async def update_equipment(
+            self,
+            equipment_id: str,
+            equipment_type_code: typing.Optional[str] = None,
+            equipment_manufacturer_code: typing.Optional[str] = None,
+            equipment_model_code: typing.Optional[str] = None,
+            serial_number: typing.Optional[str] = None,
+            inventory_number: typing.Optional[str] = None,
+            comment: typing.Optional[str] = None,
+            company_id: typing.Optional[str] = None,
+            maintenance_entity_id: typing.Optional[str] = None,
+            parent_id: typing.Optional[str] = None,
+            custom_parameters: typing.Optional[dict] = None,
+            agreement_ids: typing.Optional[typing.List[int]] = None,
+    ) -> equipments.Equipment:
+        """
+
+        :param equipment_id: ID of equipment (ID оборудования)
+        :param equipment_type_code: Equipment type code (Код типа оборудования)
+        :param equipment_manufacturer_code: Equipment manufacturer code (Код производителя оборудования)
+        :param equipment_model_code: Equipment model code (Код модели оборудования)
+        :param serial_number: Serial number (Серийный номер)
+        :param inventory_number: Inventory number (Инвентарный номер)
+        :param comment: Comment (Комментарий)
+        :param company_id: Company ID (ID компании, привязанной к оборудованию)
+        :param maintenance_entity_id: Maintenance entity ID (ID объекта обслуживания, к которому привязано оборудование)
+        :param parent_id: Parent ID (ID головного оборудования)
+        :param custom_parameters: Custom parameters (Дополнительные атрибуты оборудования)
+        :param agreement_ids: Agreement IDs (Набор ID договоров оборудования)
+        :return: Equipment (Оборудование)
+        """
+        return await self(
+            equipments.UpdateEquipmentRequest(
+                equipment_id=equipment_id,
+                equipment_type_code=equipment_type_code,
+                equipment_manufacturer_code=equipment_manufacturer_code,
+                equipment_model_code=equipment_model_code,
+                serial_number=serial_number,
+                inventory_number=inventory_number,
+                comment=comment,
+                company_id=company_id,
+                maintenance_entity_id=maintenance_entity_id,
+                parent_id=parent_id,
+                custom_parameters=custom_parameters,
+                agreement_ids=agreement_ids,
+            )
+        )
+
+    async def get_equipment(self, equipment_id: str) -> equipments.Equipment:
+        """
+
+        :param equipment_id: ID of equipment (ID оборудования)
+        :return: Equipment (Оборудование)
+        """
+        return await self(equipments.GetEquipmentRequest(equipment_id=equipment_id))
+
+    async def get_equipment_list(
+            self,
+            company_ids: typing.Optional[typing.List[int]] = None,
+            maintenance_entity_ids: typing.Optional[typing.List[int]] = None,
+            agreement_ids: typing.Optional[typing.List[int]] = None,
+            created_since: typing.Optional[datetime.date] = None,
+            created_until: typing.Optional[datetime.date] = None,
+            equipment_kind_codes: typing.Optional[typing.List[str]] = None,
+            equipment_manufacturer_codes: typing.Optional[typing.List[str]] = None,
+            equipment_model_codes: typing.Optional[typing.List[str]] = None,
+            custom_parameters: typing.Optional[typing.List[helpers.AttributeFilter]] = None,
+            page_size: typing.Optional[int] = None,
+            page_from_id: typing.Optional[int] = None,
+            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[equipments.Equipment]:
+        """
+
+        :param company_ids: Array of company IDs (Массив ID компаний)
+        :param maintenance_entity_ids: Array of maintenance entity IDs (Массив ID подразделений)
+        :param agreement_ids: Array of agreement IDs (Массив ID договоров)
+        :param created_since: Date of equipment creation from (Дата создания оборудования от)
+        :param created_until: Date of equipment creation to (Дата создания оборудования до)
+        :param equipment_kind_codes: Array of equipment kind codes (Массив кодов видов оборудования)
+        :param equipment_manufacturer_codes: Array of equipment manufacturer codes (Массив кодов производителей оборудования)
+        :param equipment_model_codes: Array of equipment model codes (Массив кодов моделей оборудования)
+        :param custom_parameters: Custom parameters (Пользовательские параметры)
+        :param page_size: Number of returned records (Число возвращаемых записей)
+        :param page_from_id: ID of equipment from which the selection starts (ID оборудования, с которого начинается выборка записей)
+        :param page_direction: Selection direction (Направление выборки)
+        :return: Array of equipment (Массив оборудования)
+        """
+        return await self(
+            equipments.ListEquipmentsRequest(
+                company_ids=company_ids,
+                maintenance_entity_ids=maintenance_entity_ids,
+                agreement_ids=agreement_ids,
+                created_since=created_since,
+                created_until=created_until,
+                equipment_kind_codes=equipment_kind_codes,
+                equipment_manufacturer_codes=equipment_manufacturer_codes,
+                equipment_model_codes=equipment_model_codes,
+                custom_parameters=custom_parameters,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
             )
         )
