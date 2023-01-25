@@ -5,7 +5,7 @@ import aiohttp
 
 from .. import types
 from ..errors import OkDeskError
-from ..api import companies, issues, maintenance_entities, shared, equipments
+from ..api import companies, issues, maintenance_entities, shared, equipments, references
 from .. import helpers
 import datetime
 
@@ -1313,5 +1313,154 @@ class OkDeskClient:
                 page_size=page_size,
                 page_from_id=page_from_id,
                 page_direction=page_direction,
+            )
+        )
+
+    # references
+
+    async def get_equipment_manufacturers(
+            self,
+            search_string: typing.Optional[str] = None,
+            page_size: typing.Optional[int] = None,
+            page_from_id: typing.Optional[int] = None,
+            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[references.EquipmentManufacturer]:
+
+        """
+
+        :param search_string: String with search query (Строка с поисковым запросом)
+        :param page_size: Number of returned records. Cannot exceed 100. (Количество возвращаемых записей. Не может превышать 100.)
+        :param page_from_id: ID of the manufacturer of the equipment from which the selection of records begins. (ID производителя оборудования, с которого начинается выборка записей.)
+        :param page_direction: Selection direction. (Направление выборки.)
+        :return: Array of equipment manufacturers (Массив производителей оборудования)
+        """
+        return await self(
+            references.GetManufacturersRequest(
+                search_string=search_string,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
+            )
+        )
+
+    async def create_equipment_manufacturer(
+            self,
+            name: str,
+            code: str,
+            description: typing.Optional[str] = None,
+    ) -> references.EquipmentManufacturer:
+
+        """
+
+        :param name: Name of the manufacturer of the equipment (Название производителя оборудования)
+        :param code: Manufacturer code (Код производителя оборудования)
+        :param description: Manufacturer description (Описание производителя оборудования)
+        :return: Manufacturer of the equipment (Производитель оборудования)
+        """
+        return await self(
+            references.CreateManufacturerRequest(
+                name=name,
+                code=code,
+                description=description,
+            )
+        )
+
+    async def get_equipment_models(
+            self,
+            search_string: typing.Optional[str] = None,
+            page_size: typing.Optional[int] = None,
+            page_from_id: typing.Optional[int] = None,
+            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[references.EquipmentModel]:
+
+        """
+
+        :param search_string: Search string (Искомая подстрока в названии или коде модели оборудования)
+        :param page_size: Page size (Число возвращаемых записей. Не может превышать 100.)
+        :param page_from_id: Page from id (ID модели оборудования, с которого начинается выборка записей. По умолчанию (если не задан параметр direction) выборка осуществляется в направлении от значения from_id в сторону уменьшения id модели.)
+        :param page_direction: Page direction (Направление выборки. Доступно два значения: reverse, forward. reverse - возвращает записи, ID которых меньше значения from_id, если параметр from_id передан. При отсутствии параметра from_id выборка осуществляется от наибольшего значения id модели. forward - возвращает записи, ID которых больше значения from_id, если параметр from_id передан. При отсутствии параметра from_id выборка осуществляется от наименьшего значения id модели.)
+        :return: Array of equipment models (Массив моделей оборудования)
+        """
+        return await self(
+            references.GetEquipmentModelsRequest(
+                search_string=search_string,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
+            )
+        )
+
+    async def create_equipment_model(
+            self,
+            name: str,
+            code: str,
+            equipment_kind_id: int,
+            equipment_manufacturer_id: int,
+            description: typing.Optional[str] = None,
+    ) -> references.EquipmentModel:
+        """
+
+        :param name: Name (Название модели оборудования)
+        :param code: Code (Код модели оборудования)
+        :param equipment_kind_id: Equipment kind id (ID типа оборудования)
+        :param equipment_manufacturer_id: Equipment manufacturer id (ID производителя оборудования)
+        :param description: Description (Описание модели оборудования)
+        :return: Equipment model (Модель оборудования)
+        """
+        return await self(
+            references.CreateEquipmentModelRequest(
+                name=name,
+                code=code,
+                equipment_kind_id=equipment_kind_id,
+                equipment_manufacturer_id=equipment_manufacturer_id,
+                description=description,
+            )
+        )
+
+    async def get_equipment_kinds(
+            self,
+            search_string: typing.Optional[str] = None,
+            page_size: typing.Optional[int] = None,
+            page_from_id: typing.Optional[int] = None,
+            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[references.EquipmentKind]:
+        """
+
+        :param search_string: Search string (Строка поиска)
+        :param page_size: Page size (Количество элементов на странице)
+        :param page_from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param page_direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of equipment kinds (Массив типов оборудования)
+        """
+        return await self(
+            references.GetEquipmentKindsRequest(
+                search_string=search_string,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
+            )
+        )
+
+    async def create_equipment_kind(
+            self,
+            name: str,
+            code: str,
+            description: typing.Optional[str] = None,
+            parameter_codes: typing.Optional[typing.List[str]] = None,
+    ) -> references.EquipmentKind:
+        """
+
+        :param name: Name (Название типа оборудования)
+        :param code: Code (Код типа оборудования)
+        :param description: Description (Описание типа оборудования)
+        :param parameter_codes: Parameter codes (Массив из кодов связанных допополнительных атрибутов оборудования)
+        :return: Equipment kind (Тип оборудования)
+        """
+        return await self(
+            references.CreateEquipmentKindRequest(
+                name=name,
+                code=code,
+                description=description,
+                parameter_codes=parameter_codes,
             )
         )

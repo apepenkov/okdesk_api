@@ -74,7 +74,6 @@ class Attachment(typing.TypedDict):
     is_public: typing.NotRequired[bool]
 
 
-
 class CodeNamePair(typing.TypedDict):
     """{
         "code": "vipclient",
@@ -105,3 +104,15 @@ class IdNameTypePair(typing.TypedDict):
     id: int
     name: str
     type: str
+
+
+class CodeIdNamePair(typing.TypedDict):
+    """{
+        "code": "vipclient",
+        "id": 3,
+        "name": "VIP-клиент"
+    }"""
+
+    code: str
+    id: int
+    name: str
