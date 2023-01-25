@@ -1193,7 +1193,7 @@ class OkDeskClient:
         parent_id: typing.Optional[str] = None,
         custom_parameters: typing.Optional[dict] = None,
         agreement_ids: typing.Optional[typing.List[int]] = None,
-    ) -> None:
+    ) -> equipments.Equipment:
         """
 
         :param equipment_type_code: Equipment type code (Код типа оборудования)
@@ -1207,6 +1207,7 @@ class OkDeskClient:
         :param parent_id: Parent ID (ID головного оборудования)
         :param custom_parameters: Custom parameters (Дополнительные атрибуты оборудования)
         :param agreement_ids: Agreement IDs (Набор ID договоров оборудования)
+        :return: Equipment (Оборудование)
         """
         return await self(
             equipments.CreateEquipmentRequest(

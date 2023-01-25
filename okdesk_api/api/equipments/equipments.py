@@ -230,11 +230,10 @@ class CreateEquipmentRequest(types.ApiRequest):
             "method": "POST",
             "url": "api/v1/equipments/",
             "json": {"equipment": json_data},
-            "allow_non_json": True,
         }
 
-    def from_response(self, result) -> None:
-        return None
+    def from_response(self, result) -> Equipment:
+        return Equipment.json_parse(result["equipment"])
 
 
 class UpdateEquipmentRequest(types.ApiRequest):
