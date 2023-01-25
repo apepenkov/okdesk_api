@@ -136,7 +136,7 @@ class CreateManufacturerRequest(types.ApiRequest):
         return {
             "method": "POST",
             "url": "api/v1/equipments/manufacturers/",
-            "json": json_data,
+            "json": {"equipment_manufacturer": json_data},
         }
 
     def from_response(self, result) -> EquipmentManufacturer:
@@ -300,7 +300,7 @@ class CreateEquipmentModelRequest(types.ApiRequest):
         return {
             "method": "POST",
             "url": "api/v1/equipments/models/",
-            "json": json_data,
+            "json": {"equipment_model": json_data},
         }
 
     def from_response(self, result) -> EquipmentModel:
@@ -440,7 +440,7 @@ class CreateEquipmentKindRequest(types.ApiRequest):
         return {
             "method": "POST",
             "url": "api/v1/equipments/kinds/",
-            "json": json_data,
+            "json": {"equipment_kind": json_data},
         }
 
     def from_response(self, result) -> EquipmentKind:
