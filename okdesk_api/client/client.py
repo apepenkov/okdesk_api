@@ -5,7 +5,14 @@ import aiohttp
 
 from .. import types
 from ..errors import OkDeskError
-from ..api import companies, issues, maintenance_entities, shared, equipments, references
+from ..api import (
+    companies,
+    issues,
+    maintenance_entities,
+    shared,
+    equipments,
+    references,
+)
 from .. import helpers
 import datetime
 
@@ -70,7 +77,12 @@ class OkDeskClient:
             kwargs["params"]["api_token"] = self._api_token
             is_json = kwargs.get("json") is not None
             if is_json:
-                kwargs["data"] = json.dumps(kwargs.pop("json"), separators=(",", ":"))
+                kwargs["data"] = json.dumps(
+                    kwargs.pop("json"),
+                    separators=(",", ":"),
+                    ensure_ascii=False,
+                    indent=4 if self._debug else None,
+                )
                 kwargs["headers"]["Content-Type"] = "application/json"
 
             # allow gzipped responses
@@ -1148,10 +1160,10 @@ class OkDeskClient:
 
     # equipments
     async def find_equipment(
-            self,
-            inventory_number: str = None,
-            serial_number: str = None,
-            search_string: str = None,
+        self,
+        inventory_number: str = None,
+        serial_number: str = None,
+        search_string: str = None,
     ) -> equipments.Equipment:
         """
 
@@ -1169,18 +1181,18 @@ class OkDeskClient:
         )
 
     async def create_equipment(
-            self,
-            equipment_type_code: str,
-            equipment_manufacturer_code: str = None,
-            equipment_model_code: typing.Optional[str] = None,
-            serial_number: typing.Optional[str] = None,
-            inventory_number: typing.Optional[str] = None,
-            comment: typing.Optional[str] = None,
-            company_id: typing.Optional[str] = None,
-            maintenance_entity_id: typing.Optional[str] = None,
-            parent_id: typing.Optional[str] = None,
-            custom_parameters: typing.Optional[dict] = None,
-            agreement_ids: typing.Optional[typing.List[int]] = None,
+        self,
+        equipment_type_code: str,
+        equipment_manufacturer_code: str = None,
+        equipment_model_code: typing.Optional[str] = None,
+        serial_number: typing.Optional[str] = None,
+        inventory_number: typing.Optional[str] = None,
+        comment: typing.Optional[str] = None,
+        company_id: typing.Optional[str] = None,
+        maintenance_entity_id: typing.Optional[str] = None,
+        parent_id: typing.Optional[str] = None,
+        custom_parameters: typing.Optional[dict] = None,
+        agreement_ids: typing.Optional[typing.List[int]] = None,
     ) -> None:
         """
 
@@ -1213,19 +1225,19 @@ class OkDeskClient:
         )
 
     async def update_equipment(
-            self,
-            equipment_id: str,
-            equipment_type_code: typing.Optional[str] = None,
-            equipment_manufacturer_code: typing.Optional[str] = None,
-            equipment_model_code: typing.Optional[str] = None,
-            serial_number: typing.Optional[str] = None,
-            inventory_number: typing.Optional[str] = None,
-            comment: typing.Optional[str] = None,
-            company_id: typing.Optional[str] = None,
-            maintenance_entity_id: typing.Optional[str] = None,
-            parent_id: typing.Optional[str] = None,
-            custom_parameters: typing.Optional[dict] = None,
-            agreement_ids: typing.Optional[typing.List[int]] = None,
+        self,
+        equipment_id: str,
+        equipment_type_code: typing.Optional[str] = None,
+        equipment_manufacturer_code: typing.Optional[str] = None,
+        equipment_model_code: typing.Optional[str] = None,
+        serial_number: typing.Optional[str] = None,
+        inventory_number: typing.Optional[str] = None,
+        comment: typing.Optional[str] = None,
+        company_id: typing.Optional[str] = None,
+        maintenance_entity_id: typing.Optional[str] = None,
+        parent_id: typing.Optional[str] = None,
+        custom_parameters: typing.Optional[dict] = None,
+        agreement_ids: typing.Optional[typing.List[int]] = None,
     ) -> equipments.Equipment:
         """
 
@@ -1269,19 +1281,19 @@ class OkDeskClient:
         return await self(equipments.GetEquipmentRequest(equipment_id=equipment_id))
 
     async def get_equipment_list(
-            self,
-            company_ids: typing.Optional[typing.List[int]] = None,
-            maintenance_entity_ids: typing.Optional[typing.List[int]] = None,
-            agreement_ids: typing.Optional[typing.List[int]] = None,
-            created_since: typing.Optional[datetime.date] = None,
-            created_until: typing.Optional[datetime.date] = None,
-            equipment_kind_codes: typing.Optional[typing.List[str]] = None,
-            equipment_manufacturer_codes: typing.Optional[typing.List[str]] = None,
-            equipment_model_codes: typing.Optional[typing.List[str]] = None,
-            custom_parameters: typing.Optional[typing.List[helpers.AttributeFilter]] = None,
-            page_size: typing.Optional[int] = None,
-            page_from_id: typing.Optional[int] = None,
-            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+        self,
+        company_ids: typing.Optional[typing.List[int]] = None,
+        maintenance_entity_ids: typing.Optional[typing.List[int]] = None,
+        agreement_ids: typing.Optional[typing.List[int]] = None,
+        created_since: typing.Optional[datetime.date] = None,
+        created_until: typing.Optional[datetime.date] = None,
+        equipment_kind_codes: typing.Optional[typing.List[str]] = None,
+        equipment_manufacturer_codes: typing.Optional[typing.List[str]] = None,
+        equipment_model_codes: typing.Optional[typing.List[str]] = None,
+        custom_parameters: typing.Optional[typing.List[helpers.AttributeFilter]] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[equipments.Equipment]:
         """
 
@@ -1319,11 +1331,11 @@ class OkDeskClient:
     # references
 
     async def get_equipment_manufacturers(
-            self,
-            search_string: typing.Optional[str] = None,
-            page_size: typing.Optional[int] = None,
-            page_from_id: typing.Optional[int] = None,
-            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+        self,
+        search_string: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[references.EquipmentManufacturer]:
 
         """
@@ -1344,10 +1356,10 @@ class OkDeskClient:
         )
 
     async def create_equipment_manufacturer(
-            self,
-            name: str,
-            code: str,
-            description: typing.Optional[str] = None,
+        self,
+        name: str,
+        code: str,
+        description: typing.Optional[str] = None,
     ) -> references.EquipmentManufacturer:
 
         """
@@ -1366,11 +1378,11 @@ class OkDeskClient:
         )
 
     async def get_equipment_models(
-            self,
-            search_string: typing.Optional[str] = None,
-            page_size: typing.Optional[int] = None,
-            page_from_id: typing.Optional[int] = None,
-            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+        self,
+        search_string: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[references.EquipmentModel]:
 
         """
@@ -1391,12 +1403,12 @@ class OkDeskClient:
         )
 
     async def create_equipment_model(
-            self,
-            name: str,
-            code: str,
-            equipment_kind_id: int,
-            equipment_manufacturer_id: int,
-            description: typing.Optional[str] = None,
+        self,
+        name: str,
+        code: str,
+        equipment_kind_id: int,
+        equipment_manufacturer_id: int,
+        description: typing.Optional[str] = None,
     ) -> references.EquipmentModel:
         """
 
@@ -1418,11 +1430,11 @@ class OkDeskClient:
         )
 
     async def get_equipment_kinds(
-            self,
-            search_string: typing.Optional[str] = None,
-            page_size: typing.Optional[int] = None,
-            page_from_id: typing.Optional[int] = None,
-            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+        self,
+        search_string: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[references.EquipmentKind]:
         """
 
@@ -1442,11 +1454,11 @@ class OkDeskClient:
         )
 
     async def create_equipment_kind(
-            self,
-            name: str,
-            code: str,
-            description: typing.Optional[str] = None,
-            parameter_codes: typing.Optional[typing.List[str]] = None,
+        self,
+        name: str,
+        code: str,
+        description: typing.Optional[str] = None,
+        parameter_codes: typing.Optional[typing.List[str]] = None,
     ) -> references.EquipmentKind:
         """
 
