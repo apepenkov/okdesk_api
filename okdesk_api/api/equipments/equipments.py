@@ -233,7 +233,7 @@ class CreateEquipmentRequest(types.ApiRequest):
         }
 
     def from_response(self, result) -> Equipment:
-        return Equipment.json_parse(result["equipment"])
+        return Equipment.json_parse(result)
 
 
 class UpdateEquipmentRequest(types.ApiRequest):
