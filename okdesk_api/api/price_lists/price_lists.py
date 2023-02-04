@@ -226,7 +226,7 @@ class GetPriceListServicesRequest(types.ApiRequest):
         self.direction = direction
 
     def to_request(self) -> dict:
-        params = {"types": self.types_}
+        params = {"types[]": self.types_}
         if self.size is not None:
             params["page[size]"] = self.size
         if self.from_id is not None:
