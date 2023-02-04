@@ -12,6 +12,7 @@ from ..api import (
     shared,
     equipments,
     references,
+    price_lists,
 )
 from .. import helpers
 import datetime
@@ -1475,5 +1476,162 @@ class OkDeskClient:
                 code=code,
                 description=description,
                 parameter_codes=parameter_codes,
+            )
+        )
+
+    # price_lists
+    async def get_price_lists(
+        self,
+        size: typing.Optional[int] = None,
+        from_id: typing.Optional[int] = None,
+        direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[price_lists.PriceList]:
+        """
+
+        :param size: Page size (Количество элементов на странице)
+        :param from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of price lists (Массив прайс-листов)
+        """
+
+        return await self(
+            price_lists.GetPriceListListRequest(
+                size=size, from_id=from_id, direction=direction
+            )
+        )
+
+    async def get_price_list_services(
+        self,
+        price_list_id: int,
+        types_: typing.List[typing.Literal["service", "work", "product"]],
+        size: typing.Optional[int] = None,
+        from_id: typing.Optional[int] = None,
+        direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[price_lists.Service]:
+        """
+
+        :param price_list_id: Price list id (ID прайс-листа)
+        :param types_: Types (Типы услуг)
+        :param size: Page size (Количество элементов на странице)
+        :param from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of services (Массив услуг)
+        """
+
+        return await self(
+            price_lists.GetPriceListServicesRequest(
+                price_list_id=price_list_id,
+                types_=types_,
+                size=size,
+                from_id=from_id,
+                direction=direction,
+            )
+        )
+
+    async def add_service_to_price_list(
+        self,
+        price_list_id: int,
+        code: str,
+        name: str,
+        type_: typing.Literal["work", "product", "service"],
+        unit: str,
+        price: float,
+        nds: int,
+        visible: typing.Optional[bool] = None,
+        description: typing.Optional[str] = None,
+    ) -> price_lists.Service:
+        """
+
+        :param price_list_id: Price list id (ID прайс-листа)
+        :param code: Code (Код услуги/работы/товара)
+        :param name: Name (Название услуги/работы/товара)
+        :param type_: Type (Тип услуги/работы/товара)
+        :param unit: Unit (Единица измерения)
+        :param price: Price (Цена)
+        :param nds: Nds (НДС)
+        :param visible: Visible (Видимость)
+        :param description: Description (Описание)
+        :return: Service (Услуга/работа/товар)
+        """
+
+        return await self(
+            price_lists.AddServiceToPriceListRequest(
+                price_list_id=price_list_id,
+                code=code,
+                name=name,
+                type_=type_,
+                unit=unit,
+                price=price,
+                nds=nds,
+                visible=visible,
+                description=description,
+            )
+        )
+
+    async def update_service_in_pricelist(
+        self,
+        price_list_id: int,
+        code: str,
+        name: typing.Optional[str] = None,
+        type_: typing.Optional[typing.Literal["work", "product", "service"]] = None,
+        unit: typing.Optional[str] = None,
+        price: typing.Optional[float] = None,
+        nds: typing.Optional[int] = None,
+        visible: typing.Optional[bool] = None,
+        description: typing.Optional[str] = None,
+    ) -> price_lists.Service:
+        """
+
+        :param price_list_id: Price list id (ID прайс-листа)
+        :param code: Code (Код услуги/работы/товара)
+        :param name: Name (Название услуги/работы/товара)
+        :param type_: Type (Тип услуги/работы/товара)
+        :param unit: Unit (Единица измерения)
+        :param price: Price (Цена)
+        :param nds: Nds (НДС)
+        :param visible: Visible (Видимость)
+        :param description: Description (Описание)
+        :return: Service (Услуга/работа/товар)
+        """
+
+        return await self(
+            price_lists.UpdateServiceInPriceListRequest(
+                price_list_id=price_list_id,
+                code=code,
+                name=name,
+                type_=type_,
+                unit=unit,
+                price=price,
+                nds=nds,
+                visible=visible,
+                description=description,
+            )
+        )
+
+    async def get_available_services_for_issue(
+        self,
+        issue_id: int,
+        search_string: str = None,
+        size: typing.Optional[int] = None,
+        from_id: typing.Optional[int] = None,
+        direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[price_lists.ServiceWithPriceList]:
+        """
+
+        :param issue_id: Issue id (ID заявки)
+        :param search_string: Search string (Строка поиска)
+        :param size: Page size (Количество элементов на странице)
+        :param from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of services (Массив услуг)
+        """
+
+        return await self(
+            price_lists.GetAvailableServicesForIssueRequest(
+                issue_id=issue_id,
+                search_string=search_string,
+                size=size,
+                from_id=from_id,
+                direction=direction,
             )
         )

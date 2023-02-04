@@ -187,20 +187,20 @@ class CreateMaintenanceEntityRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            name: str,
-            company_id: int,
-            agreement_ids: typing.Optional[typing.List[int]] = None,
-            address: typing.Optional[str] = None,
-            coordinates: typing.Optional[typing.List[float]] = None,
-            timezone: typing.Optional[str] = None,
-            comment: typing.Optional[str] = None,
-            default_assignee_id: typing.Optional[int] = None,
-            default_assignee_group_id: typing.Optional[int] = None,
-            schedule_id: typing.Optional[int] = None,
-            observer_ids: typing.Optional[typing.List[int]] = None,
-            observer_group_ids: typing.Optional[typing.List[int]] = None,
-            custom_parameters: typing.Optional[dict] = None,
+        self,
+        name: str,
+        company_id: int,
+        agreement_ids: typing.Optional[typing.List[int]] = None,
+        address: typing.Optional[str] = None,
+        coordinates: typing.Optional[typing.List[float]] = None,
+        timezone: typing.Optional[str] = None,
+        comment: typing.Optional[str] = None,
+        default_assignee_id: typing.Optional[int] = None,
+        default_assignee_group_id: typing.Optional[int] = None,
+        schedule_id: typing.Optional[int] = None,
+        observer_ids: typing.Optional[typing.List[int]] = None,
+        observer_group_ids: typing.Optional[typing.List[int]] = None,
+        custom_parameters: typing.Optional[dict] = None,
     ):
         """
 
@@ -234,7 +234,7 @@ class CreateMaintenanceEntityRequest(types.ApiRequest):
         self.custom_parameters: typing.Optional[dict] = custom_parameters
 
     def to_request(
-            self,
+        self,
     ) -> dict:
         json_data = {
             "name": self.name,
@@ -282,10 +282,10 @@ class SearchMaintenanceEntityRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            name: typing.Optional[str] = None,
-            comment: typing.Optional[str] = None,
-            search_string: typing.Optional[str] = None,
+        self,
+        name: typing.Optional[str] = None,
+        comment: typing.Optional[str] = None,
+        search_string: typing.Optional[str] = None,
     ):
         """
 
@@ -298,7 +298,7 @@ class SearchMaintenanceEntityRequest(types.ApiRequest):
         self.search_string: typing.Optional[str] = search_string
 
     def to_request(
-            self,
+        self,
     ) -> dict:
         params: typing.Dict[str, typing.Union[str, typing.List[str]]] = {}
         if self.name is not None:
@@ -338,21 +338,21 @@ class UpdateMaintenanceEntityRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            id_: int,
-            name: typing.Optional[str] = None,
-            company_id: typing.Optional[int] = None,
-            agreement_ids: typing.Optional[typing.List[int]] = None,
-            address: typing.Optional[str] = None,
-            coordinates: typing.Optional[typing.List[float]] = None,
-            timezone: typing.Optional[str] = None,
-            comment: typing.Optional[str] = None,
-            default_assignee_id: typing.Optional[int] = None,
-            default_assignee_group_id: typing.Optional[int] = None,
-            schedule_id: typing.Optional[int] = None,
-            observer_ids: typing.Optional[typing.List[int]] = None,
-            observer_group_ids: typing.Optional[typing.List[int]] = None,
-            custom_parameters: typing.Optional[typing.List[dict]] = None,
+        self,
+        id_: int,
+        name: typing.Optional[str] = None,
+        company_id: typing.Optional[int] = None,
+        agreement_ids: typing.Optional[typing.List[int]] = None,
+        address: typing.Optional[str] = None,
+        coordinates: typing.Optional[typing.List[float]] = None,
+        timezone: typing.Optional[str] = None,
+        comment: typing.Optional[str] = None,
+        default_assignee_id: typing.Optional[int] = None,
+        default_assignee_group_id: typing.Optional[int] = None,
+        schedule_id: typing.Optional[int] = None,
+        observer_ids: typing.Optional[typing.List[int]] = None,
+        observer_group_ids: typing.Optional[typing.List[int]] = None,
+        custom_parameters: typing.Optional[typing.List[dict]] = None,
     ):
         """
 
@@ -387,7 +387,7 @@ class UpdateMaintenanceEntityRequest(types.ApiRequest):
         self.custom_parameters: typing.Optional[typing.List[dict]] = custom_parameters
 
     def to_request(
-            self,
+        self,
     ) -> dict:
         json_data = {
             "id": self.id,
@@ -444,7 +444,7 @@ class GetMaintenanceEntityRequest(types.ApiRequest):
         self.id: int = id_
 
     def to_request(
-            self,
+        self,
     ) -> dict:
         return {
             "method": "GET",
@@ -504,17 +504,17 @@ class ListMaintenanceEntitiesRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            company_ids: typing.Optional[typing.List[int]] = None,
-            default_assignee_ids: typing.Optional[typing.List[int]] = None,
-            default_assignee_group_ids: typing.Optional[typing.List[int]] = None,
-            created_since: typing.Optional[datetime.date] = None,
-            created_until: typing.Optional[datetime.date] = None,
-            updated_since: typing.Optional[datetime.date] = None,
-            updated_until: typing.Optional[datetime.date] = None,
-            page_size: typing.Optional[int] = None,
-            page_from_id: typing.Optional[int] = None,
-            page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+        self,
+        company_ids: typing.Optional[typing.List[int]] = None,
+        default_assignee_ids: typing.Optional[typing.List[int]] = None,
+        default_assignee_group_ids: typing.Optional[typing.List[int]] = None,
+        created_since: typing.Optional[datetime.date] = None,
+        created_until: typing.Optional[datetime.date] = None,
+        updated_since: typing.Optional[datetime.date] = None,
+        updated_until: typing.Optional[datetime.date] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ):
         """
 
@@ -548,7 +548,7 @@ class ListMaintenanceEntitiesRequest(types.ApiRequest):
         ] = page_direction
 
     def to_request(
-            self,
+        self,
     ) -> dict:
         params: typing.Dict[str, typing.Union[str, typing.List[str]]] = {}
         if self.company_ids is not None:
@@ -596,7 +596,7 @@ class AddMaintenanceEntityAttachmentRequest(types.ApiRequest):
     """
 
     def __init__(
-            self, maintenance_entity_id: int, attachments: typing.List[types.Attachment]
+        self, maintenance_entity_id: int, attachments: typing.List[types.Attachment]
     ):
         """
 
@@ -609,25 +609,27 @@ class AddMaintenanceEntityAttachmentRequest(types.ApiRequest):
     def to_request(self) -> dict:
         multipart_data = MultipartEncoder({})
         for i, attachment in enumerate(self.attachments):
-            if not os.path.isfile(attachment['attachment']):
-                raise Exception('File not found')
-            file_name = os.path.basename(attachment['attachment'])
+            if not os.path.isfile(attachment["attachment"]):
+                raise Exception("File not found")
+            file_name = os.path.basename(attachment["attachment"])
             content_type = mimetypes.guess_type(file_name)[0]
-            multipart_data.fields[f"maintenance_entity[attachments][{i}][attachment]"] = (
-                file_name, open(attachment['attachment'], 'rb'), content_type
-            )
-            if 'is_public' in attachment:
-                multipart_data.fields[f"maintenance_entity[attachments][{i}][is_public]"] = attachment['is_public']
-            if 'description' in attachment:
-                multipart_data.fields[f"maintenance_entity[attachments][{i}][description]"] = attachment['description']
+            multipart_data.fields[
+                f"maintenance_entity[attachments][{i}][attachment]"
+            ] = (file_name, open(attachment["attachment"], "rb"), content_type)
+            if "is_public" in attachment:
+                multipart_data.fields[
+                    f"maintenance_entity[attachments][{i}][is_public]"
+                ] = attachment["is_public"]
+            if "description" in attachment:
+                multipart_data.fields[
+                    f"maintenance_entity[attachments][{i}][description]"
+                ] = attachment["description"]
 
         return {
             "method": "POST",
             "url": f"api/v1/maintenance_entities/{self.maintenance_entity_id}/attachments/",
             "data": multipart_data.read(),
-            "headers": {
-                "Content-Type": multipart_data.content_type
-            }
+            "headers": {"Content-Type": multipart_data.content_type},
         }
 
     def from_response(self, result) -> MaintanceEntity:

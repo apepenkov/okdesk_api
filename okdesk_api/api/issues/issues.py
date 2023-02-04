@@ -564,28 +564,28 @@ class CreateIssueRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            title: str,
-            description: typing.Optional[str] = None,
-            company_id: typing.Optional[str] = None,
-            contact_id: typing.Optional[str] = None,
-            agreement_id: typing.Optional[str] = None,
-            assignee_id: typing.Optional[str] = None,
-            group_id: typing.Optional[str] = None,
-            observer_ids: typing.Optional[typing.List[int]] = None,
-            observer_group_ids: typing.Optional[typing.List[int]] = None,
-            contact_observer_ids: typing.Optional[typing.List[int]] = None,
-            maintenance_entity_id: typing.Optional[str] = None,
-            equipment_ids: typing.Optional[typing.List[str]] = None,
-            type_: typing.Optional[str] = None,
-            priority: typing.Optional[str] = None,
-            deadline_at: typing.Optional[datetime.datetime] = None,
-            start_execution_until: typing.Optional[datetime.datetime] = None,
-            planned_execution_in_minutes: typing.Optional[float] = None,
-            custom_parameters: typing.Optional[typing.List[dict]] = None,
-            parent_id: typing.Optional[str] = None,
-            author: typing.Optional[dict] = None,
-            files: typing.Optional[typing.List[types.Attachment]] = None,
+        self,
+        title: str,
+        description: typing.Optional[str] = None,
+        company_id: typing.Optional[str] = None,
+        contact_id: typing.Optional[str] = None,
+        agreement_id: typing.Optional[str] = None,
+        assignee_id: typing.Optional[str] = None,
+        group_id: typing.Optional[str] = None,
+        observer_ids: typing.Optional[typing.List[int]] = None,
+        observer_group_ids: typing.Optional[typing.List[int]] = None,
+        contact_observer_ids: typing.Optional[typing.List[int]] = None,
+        maintenance_entity_id: typing.Optional[str] = None,
+        equipment_ids: typing.Optional[typing.List[str]] = None,
+        type_: typing.Optional[str] = None,
+        priority: typing.Optional[str] = None,
+        deadline_at: typing.Optional[datetime.datetime] = None,
+        start_execution_until: typing.Optional[datetime.datetime] = None,
+        planned_execution_in_minutes: typing.Optional[float] = None,
+        custom_parameters: typing.Optional[typing.List[dict]] = None,
+        parent_id: typing.Optional[str] = None,
+        author: typing.Optional[dict] = None,
+        files: typing.Optional[typing.List[types.Attachment]] = None,
     ):
         """
 
@@ -802,10 +802,10 @@ class ChangeIssueAssigneeRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            assignee_id: typing.Optional[int] = None,
-            group_id: typing.Optional[int] = None,
+        self,
+        issue_id: int,
+        assignee_id: typing.Optional[int] = None,
+        group_id: typing.Optional[int] = None,
     ):
         """
 
@@ -847,9 +847,9 @@ class ChangeIssueDeadlineRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            deadline_at: typing.Optional[datetime.datetime] = None,
+        self,
+        issue_id: int,
+        deadline_at: typing.Optional[datetime.datetime] = None,
     ):
         """
 
@@ -888,9 +888,9 @@ class ChangeIssueCodeRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            code: str,
+        self,
+        issue_id: int,
+        code: str,
     ):
         """
 
@@ -928,9 +928,9 @@ class ChangeIssueParametersRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            custom_parameters: typing.Dict[str, typing.Any],
+        self,
+        issue_id: int,
+        custom_parameters: typing.Dict[str, typing.Any],
     ):
         """
 
@@ -970,10 +970,10 @@ class ChangeIssueAddressRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            value: str,
-            coordinates: typing.List[float],
+        self,
+        issue_id: int,
+        value: str,
+        coordinates: typing.List[float],
     ):
         """
 
@@ -1025,15 +1025,15 @@ class ChangeIssueStatusRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            code: str,
-            delay_to: typing.Optional[datetime.datetime] = None,
-            comment: typing.Optional[str] = None,
-            comment_public: typing.Optional[bool] = None,
-            custom_parameters: typing.Optional[dict] = None,
-            time_entry: typing.Optional[list] = None,
-            skip_options: typing.Optional[list] = None,
+        self,
+        issue_id: int,
+        code: str,
+        delay_to: typing.Optional[datetime.datetime] = None,
+        comment: typing.Optional[str] = None,
+        comment_public: typing.Optional[bool] = None,
+        custom_parameters: typing.Optional[dict] = None,
+        time_entry: typing.Optional[list] = None,
+        skip_options: typing.Optional[list] = None,
     ):
         """
 
@@ -1101,13 +1101,13 @@ class AddCommentRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            content: str,
-            author_id: int,
-            author_type: typing.Optional[typing.Literal["employee", "contact"]] = None,
-            public: typing.Optional[bool] = None,
-            attachments: typing.Optional[typing.List[types.Attachment]] = None,
+        self,
+        issue_id: int,
+        content: str,
+        author_id: int,
+        author_type: typing.Optional[typing.Literal["employee", "contact"]] = None,
+        public: typing.Optional[bool] = None,
+        attachments: typing.Optional[typing.List[types.Attachment]] = None,
     ):
         """
 
@@ -1126,9 +1126,7 @@ class AddCommentRequest(types.ApiRequest):
             typing.Literal["employee", "contact"]
         ] = author_type
         self.public: typing.Optional[bool] = public
-        self.attachments: typing.Optional[
-            typing.List[types.Attachment]
-        ] = attachments
+        self.attachments: typing.Optional[typing.List[types.Attachment]] = attachments
 
     def to_request(self) -> dict:
         if self.attachments is None:
@@ -1157,12 +1155,14 @@ class AddCommentRequest(types.ApiRequest):
                 multipart.fields["comment[public]"] = self.public
             for i, attachment in enumerate(self.attachments):
                 multipart.fields[f"comment[attachments_attributes][{i}][file]"] = (
-                    os.path.basename(attachment['attachment']),
-                    open(attachment['attachment'], 'rb'),
-                    mimetypes.guess_type(attachment['attachment'])[0],
+                    os.path.basename(attachment["attachment"]),
+                    open(attachment["attachment"], "rb"),
+                    mimetypes.guess_type(attachment["attachment"])[0],
                 )
                 if "description" in attachment:
-                    multipart.fields[f"comment[attachments_attributes][{i}][description]"] = attachment['description']
+                    multipart.fields[
+                        f"comment[attachments_attributes][{i}][description]"
+                    ] = attachment["description"]
             return {
                 "method": "POST",
                 "url": f"api/v1/issues/{self.issue_id}/comments",
@@ -1308,39 +1308,39 @@ class GetIssuesListIdRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            assignee_ids: typing.Optional[typing.List[int]] = None,
-            assignee_group_ids: typing.Optional[typing.List[int]] = None,
-            company_ids: typing.Optional[typing.List[int]] = None,
-            agreement_ids: typing.Optional[typing.List[int]] = None,
-            contact_ids: typing.Optional[typing.List[int]] = None,
-            author_employee_ids: typing.Optional[typing.List[int]] = None,
-            author_contact_ids: typing.Optional[typing.List[int]] = None,
-            maintenance_entity_ids: typing.Optional[typing.List[int]] = None,
-            equipment_ids: typing.Optional[typing.List[int]] = None,
-            status: typing.Optional[typing.List[str]] = None,
-            status_not: typing.Optional[typing.List[str]] = None,
-            opened: typing.Optional[bool] = None,
-            priority: typing.Optional[typing.List[str]] = None,
-            type_: typing.Optional[typing.List[str]] = None,
-            rate: typing.Optional[typing.List[str]] = None,
-            created_since: typing.Optional[datetime.date] = None,
-            created_until: typing.Optional[datetime.date] = None,
-            overdue: typing.Optional[int] = None,
-            overdue_reaction: typing.Optional[int] = None,
-            completed_since: typing.Optional[datetime.date] = None,
-            completed_until: typing.Optional[datetime.date] = None,
-            updated_since: typing.Optional[datetime.date] = None,
-            updated_until: typing.Optional[datetime.date] = None,
-            reacted_since: typing.Optional[datetime.datetime] = None,
-            reacted_until: typing.Optional[datetime.datetime] = None,
-            deadline_since: typing.Optional[datetime.datetime] = None,
-            deadline_until: typing.Optional[datetime.datetime] = None,
-            start_execution_since: typing.Optional[datetime.datetime] = None,
-            start_execution_until: typing.Optional[datetime.datetime] = None,
-            planned_reaction_since: typing.Optional[datetime.datetime] = None,
-            planned_reaction_until: typing.Optional[datetime.datetime] = None,
-            custom_parameters: typing.Optional[typing.List[helpers.AttributeFilter]] = None,
+        self,
+        assignee_ids: typing.Optional[typing.List[int]] = None,
+        assignee_group_ids: typing.Optional[typing.List[int]] = None,
+        company_ids: typing.Optional[typing.List[int]] = None,
+        agreement_ids: typing.Optional[typing.List[int]] = None,
+        contact_ids: typing.Optional[typing.List[int]] = None,
+        author_employee_ids: typing.Optional[typing.List[int]] = None,
+        author_contact_ids: typing.Optional[typing.List[int]] = None,
+        maintenance_entity_ids: typing.Optional[typing.List[int]] = None,
+        equipment_ids: typing.Optional[typing.List[int]] = None,
+        status: typing.Optional[typing.List[str]] = None,
+        status_not: typing.Optional[typing.List[str]] = None,
+        opened: typing.Optional[bool] = None,
+        priority: typing.Optional[typing.List[str]] = None,
+        type_: typing.Optional[typing.List[str]] = None,
+        rate: typing.Optional[typing.List[str]] = None,
+        created_since: typing.Optional[datetime.date] = None,
+        created_until: typing.Optional[datetime.date] = None,
+        overdue: typing.Optional[int] = None,
+        overdue_reaction: typing.Optional[int] = None,
+        completed_since: typing.Optional[datetime.date] = None,
+        completed_until: typing.Optional[datetime.date] = None,
+        updated_since: typing.Optional[datetime.date] = None,
+        updated_until: typing.Optional[datetime.date] = None,
+        reacted_since: typing.Optional[datetime.datetime] = None,
+        reacted_until: typing.Optional[datetime.datetime] = None,
+        deadline_since: typing.Optional[datetime.datetime] = None,
+        deadline_until: typing.Optional[datetime.datetime] = None,
+        start_execution_since: typing.Optional[datetime.datetime] = None,
+        start_execution_until: typing.Optional[datetime.datetime] = None,
+        planned_reaction_since: typing.Optional[datetime.datetime] = None,
+        planned_reaction_until: typing.Optional[datetime.datetime] = None,
+        custom_parameters: typing.Optional[typing.List[helpers.AttributeFilter]] = None,
     ):
         """
 
@@ -1565,23 +1565,23 @@ class GetIssuesListRichRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            company_ids: typing.Optional[typing.List[int]] = None,
-            contact_ids: typing.Optional[typing.List[int]] = None,
-            service_object_ids: typing.Optional[typing.List[int]] = None,
-            status_codes: typing.Optional[typing.List[str]] = None,
-            priority_codes: typing.Optional[typing.List[str]] = None,
-            type_codes: typing.Optional[typing.List[str]] = None,
-            created_since: typing.Optional[datetime.date] = None,
-            created_until: typing.Optional[datetime.date] = None,
-            completed_since: typing.Optional[datetime.date] = None,
-            completed_until: typing.Optional[datetime.date] = None,
-            page_number: typing.Optional[int] = None,
-            page_size: typing.Optional[int] = None,
-            sorting_field: typing.Optional[
-                typing.Literal["created_at", "updated_at"]
-            ] = None,
-            sorting_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+        self,
+        company_ids: typing.Optional[typing.List[int]] = None,
+        contact_ids: typing.Optional[typing.List[int]] = None,
+        service_object_ids: typing.Optional[typing.List[int]] = None,
+        status_codes: typing.Optional[typing.List[str]] = None,
+        priority_codes: typing.Optional[typing.List[str]] = None,
+        type_codes: typing.Optional[typing.List[str]] = None,
+        created_since: typing.Optional[datetime.date] = None,
+        created_until: typing.Optional[datetime.date] = None,
+        completed_since: typing.Optional[datetime.date] = None,
+        completed_until: typing.Optional[datetime.date] = None,
+        page_number: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        sorting_field: typing.Optional[
+            typing.Literal["created_at", "updated_at"]
+        ] = None,
+        sorting_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ):
         """
 
@@ -1685,9 +1685,9 @@ class PostRatingIssueRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            rate: typing.Literal["bad", "normal", "good"],
+        self,
+        issue_id: int,
+        rate: typing.Literal["bad", "normal", "good"],
     ):
         """
 
@@ -1720,8 +1720,8 @@ class GetIssueSpecificationsRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
+        self,
+        issue_id: int,
     ):
         """
 
@@ -1760,15 +1760,15 @@ class AddSpecificationToIssueRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            code: str,
-            quantity: float,
-            performer_id: typing.Optional[int] = None,
-            price_list_id: typing.Optional[int] = None,
-            comment: typing.Optional[str] = None,
-            total: typing.Optional[float] = None,
-            discount: typing.Optional[int] = None,
+        self,
+        issue_id: int,
+        code: str,
+        quantity: float,
+        performer_id: typing.Optional[int] = None,
+        price_list_id: typing.Optional[int] = None,
+        comment: typing.Optional[str] = None,
+        total: typing.Optional[float] = None,
+        discount: typing.Optional[int] = None,
     ):
         """
 
@@ -1858,13 +1858,13 @@ class AddTimeEntryIssueRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            employee_id: int,
-            formatted_spent_time: str,
-            logged_at: datetime.datetime,
-            comment: typing.Optional[str] = None,
-            custom_parameters: typing.Optional[dict] = None,
+        self,
+        issue_id: int,
+        employee_id: int,
+        formatted_spent_time: str,
+        logged_at: datetime.datetime,
+        comment: typing.Optional[str] = None,
+        custom_parameters: typing.Optional[dict] = None,
     ):
         """
 
@@ -1990,15 +1990,15 @@ class AddIssueCheckListItemRequest(types.ApiRequest):
         """
 
         def __init__(
-                self,
-                name: str,
-                item_type: typing.Literal["point", "header"],
-                required_to_status_codes: typing.List[str] = None,
-                required_from_status_codes: typing.List[str] = None,
-                visible_for_clients: bool = None,
-                planned_execution_in_minutes: int = None,
-                parameters: dict = None,
-                children: typing.List["AddIssueCheckListItemRequest.CheckListAdd"] = None,
+            self,
+            name: str,
+            item_type: typing.Literal["point", "header"],
+            required_to_status_codes: typing.List[str] = None,
+            required_from_status_codes: typing.List[str] = None,
+            visible_for_clients: bool = None,
+            planned_execution_in_minutes: int = None,
+            parameters: dict = None,
+            children: typing.List["AddIssueCheckListItemRequest.CheckListAdd"] = None,
         ):
             self.name = name
             self.item_type = item_type
@@ -2022,9 +2022,9 @@ class AddIssueCheckListItemRequest(types.ApiRequest):
             }
 
     def __init__(
-            self,
-            issue_id: int,
-            check_list: typing.List[CheckListAdd],
+        self,
+        issue_id: int,
+        check_list: typing.List[CheckListAdd],
     ):
         """
 
@@ -2069,12 +2069,12 @@ class MarkCheckedChecklistItemIssueRequest(types.ApiRequest):
     """
 
     def __init__(
-            self,
-            issue_id: int,
-            item_id: int,
-            checked: bool,
-            item_parameters: dict = None,
-            attachment: str = None,
+        self,
+        issue_id: int,
+        item_id: int,
+        checked: bool,
+        item_parameters: dict = None,
+        attachment: str = None,
     ):
         """
 

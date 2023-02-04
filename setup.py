@@ -16,6 +16,7 @@ setup(
         "okdesk_api.api.maintenance_entities",
         "okdesk_api.api.equipments",
         "okdesk_api.api.references",
+        "okdesk_api.api.price_lists",
         "okdesk_api.types",
         "okdesk_api.client",
         "okdesk_api.errors",

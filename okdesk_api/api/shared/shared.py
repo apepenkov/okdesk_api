@@ -44,5 +44,3 @@ class Attachment(types.OkDeskBaseClass):
             instance.created_at = datetime.datetime.fromisoformat(created_at)
         instance.attachment_url = data.get("attachment_url")
         return instance
-
-

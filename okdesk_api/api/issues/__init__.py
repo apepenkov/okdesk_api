@@ -7,7 +7,6 @@ from .issues import (
     TimeEntry,
     Specification,
     Employee,
-
     MarkCheckedChecklistItemIssueRequest,
     AddIssueCheckListItemRequest,
     AddCommentRequest,
