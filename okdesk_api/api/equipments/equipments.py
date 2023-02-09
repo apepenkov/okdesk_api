@@ -99,7 +99,7 @@ class Equipment(types.OkDeskBaseClass):
         return instance
 
 
-class FindEquipmentRequest(types.ApiRequest):
+class test_create_enter(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!oborudovanie-poisk-oborudovaniya
 
@@ -136,7 +136,7 @@ class FindEquipmentRequest(types.ApiRequest):
             params["search_string"] = self.search_string
         return {
             "method": "GET",
-            "url": "api/v1/equipment",
+            "url": "api/v1/equipments",
             "params": params,
         }
 
