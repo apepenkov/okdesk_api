@@ -8,12 +8,14 @@ from .references import (
     GetEquipmentModelsRequest,
     EquipmentKind,
     EquipmentModel,
+    UpdateManufacturerRequest,
 )
 
 __all__ = [
     "EquipmentManufacturer",
     "CreateManufacturerRequest",
     "GetManufacturersRequest",
+    "UpdateManufacturerRequest",
     "GetEquipmentKindsRequest",
     "CreateEquipmentKindRequest",
     "CreateEquipmentModelRequest",

@@ -1379,6 +1379,32 @@ class OkDeskClient:
             )
         )
 
+    async def update_equipment_manufacturer(
+        self,
+        manufacturer_id: int,
+        name: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        visible: typing.Optional[bool] = None,
+    ) -> references.EquipmentManufacturer:
+        """
+        Update equipment manufacturer (Обновить производителя оборудования)
+
+        :param manufacturer_id: Manufacturer ID (ID производителя оборудования)
+        :param name: Name of the manufacturer of the equipment (Название производителя оборудования)
+        :param description: Manufacturer description (Описание производителя оборудования)
+        :param visible: Manufacturer visibility (Признак включенности)
+        :return: Updated manufacturer of the equipment (Обновленный производитель оборудования)
+        """
+
+        return await self(
+            references.UpdateManufacturerRequest(
+                manufacturer_id=manufacturer_id,
+                name=name,
+                description=description,
+                visible=visible,
+            )
+        )
+
     async def get_equipment_models(
         self,
         search_string: typing.Optional[str] = None,

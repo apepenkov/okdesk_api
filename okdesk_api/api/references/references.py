@@ -38,13 +38,13 @@ class GetManufacturersRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!poluchenie-spiska-proizvoditelej-oborudovaniya-poluchenie-spiska-proizvoditelej-oborudovaniya
 
-    Допустимые параметры запроса: ¶
+    Допустимые параметры запроса:
     Название 	Тип 	Обязательность 	Описание
     search_string 	string 	опционально 	Искомая подстрока в названии или коде производителя оборудования
 
     page 	associative array 	опционально 	Ассоциативный массив параметров постраничного вывода списка производителей оборудования (подробное описание представлено в таблице ниже).
 
-    Допустимые параметры постраничного вывода: ¶
+    Допустимые параметры постраничного вывода:
     Название 	Тип значения 	Обязательность 	Описание
     size 	integer 	опционально 	Число возвращаемых записей. Не может превышать 100.
     Пример: page[size]=30
@@ -103,7 +103,7 @@ class CreateManufacturerRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!poluchenie-spiska-proizvoditelej-oborudovaniya-sozdanie-proizvoditelya-oborudovaniya
 
-    Допустимые параметры запроса: ¶
+    Допустимые параметры запроса:
     Название 	    Тип 	Обязательность 	Описание
     name 	        string 	обязательный 	Название производителя оборудования
     code 	        string 	обязательный 	Код производителя оборудования
@@ -136,6 +136,56 @@ class CreateManufacturerRequest(types.ApiRequest):
         return {
             "method": "POST",
             "url": "api/v1/equipments/manufacturers/",
+            "json": {"equipment_manufacturer": json_data},
+        }
+
+    def from_response(self, result) -> EquipmentManufacturer:
+        return EquipmentManufacturer.json_parse(result)
+
+
+class UpdateManufacturerRequest(types.ApiRequest):
+    """
+    https://okdesk.ru/apidoc#!poluchenie-spiska-proizvoditelej-oborudovaniya-redaktirovanie-proizvoditelya-oborudovaniya
+
+    patch /api/v1/equipments/manufacturers/{manufacturer_id}
+
+    Допустимые параметры запроса:
+    Название 	    Тип 	    Обязательность 	Описание
+    name 	        string 	    необязательный 	Название производителя оборудования
+    description 	string 	    необязательный 	Описание производителя оборудования
+    visible 	    boolean 	необязательный 	Признак включенности
+    """
+
+    def __init__(
+        self,
+        manufacturer_id: int,
+        name: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        visible: typing.Optional[bool] = None,
+    ):
+        """
+
+        :param manufacturer_id: Manufacturer ID (ID производителя оборудования)
+        :param name: Name of the manufacturer of the equipment (Название производителя оборудования)
+        :param description: Manufacturer description (Описание производителя оборудования)
+        :param visible: Manufacturer visibility (Признак включенности)
+        """
+        self.manufacturer_id = manufacturer_id
+        self.name = name
+        self.description = description
+        self.visible = visible
+
+    def to_request(self) -> dict:
+        json_data = {}
+        if self.name is not None:
+            json_data["name"] = self.name
+        if self.description is not None:
+            json_data["description"] = self.description
+        if self.visible is not None:
+            json_data["visible"] = self.visible
+        return {
+            "method": "PATCH",
+            "url": f"api/v1/equipments/manufacturers/{self.manufacturer_id}",
             "json": {"equipment_manufacturer": json_data},
         }
 
@@ -190,13 +240,13 @@ class GetEquipmentModelsRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!poluchenie-spiska-modelej-oborudovaniya-poluchenie-spiska-modelej-oborudovaniya
 
-    Допустимые параметры запроса: ¶
+    Допустимые параметры запроса:
     Название 	Тип 	Обязательность 	Описание
     search_string 	string 	опционально 	Искомая подстрока в названии или коде модели оборудования
 
     page 	associative array 	опционально 	Ассоциативный массив параметров постраничного вывода списка моделей оборудования (подробное описание представлено в таблице ниже).
 
-    Допустимые параметры постраничного вывода: ¶
+    Допустимые параметры постраничного вывода:
     Название 	Тип значения 	Обязательность 	Описание
     size 	integer 	опционально 	Число возвращаемых записей. Не может превышать 100.
     Пример: page[size]=30
@@ -256,7 +306,7 @@ class CreateEquipmentModelRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!poluchenie-spiska-modelej-oborudovaniya-sozdanie-modelej-oborudovaniya
 
-    Допустимые параметры запроса: ¶
+    Допустимые параметры запроса:
     Название 	                Тип 	Обязательность 	Описание
     name 	                    string 	обязательный 	Название модели оборудования
     code 	                    string 	обязательный 	Код модели оборудования
@@ -307,6 +357,68 @@ class CreateEquipmentModelRequest(types.ApiRequest):
         return EquipmentModel.json_parse(result)
 
 
+class UpdateEquipmentModelRequest(types.ApiRequest):
+    """
+    https://okdesk.ru/apidoc#!poluchenie-spiska-modelej-oborudovaniya-redaktirovanie-modeli-oborudovaniya
+
+    Допустимые параметры запроса:
+    Название 	                Тип 	Обязательность 	Описание
+    name 	                    string 	необязательный 	Название модели оборудования
+    description 	            string 	необязательный 	Описание модели оборудования
+    visible                     boolean необязательный 	Видимость модели оборудования
+    equipment_kind_id 	        integer необязательный 	ID типа оборудования
+    equipment_manufacturer_id 	integer необязательный 	ID производителя оборудования
+    """
+
+    def __init__(
+        self,
+        equipment_model_id: int,
+        name: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        visible: typing.Optional[bool] = None,
+        equipment_kind_id: typing.Optional[int] = None,
+        equipment_manufacturer_id: typing.Optional[int] = None,
+    ):
+        """
+
+        :param equipment_model_id: Equipment model id (ID модели оборудования)
+        :param name: Name (Название модели оборудования)
+        :param description: Description (Описание модели оборудования)
+        :param visible: Visible (Видимость модели оборудования)
+        :param equipment_kind_id: Equipment kind id (ID типа оборудования)
+        :param equipment_manufacturer_id: Equipment manufacturer id (ID производителя оборудования)
+        """
+
+        self.equipment_model_id = equipment_model_id
+        self.name = name
+        self.description = description
+        self.visible = visible
+        self.equipment_kind_id = equipment_kind_id
+        self.equipment_manufacturer_id = equipment_manufacturer_id
+
+    def to_request(self) -> dict:
+        json_data = {}
+        if self.name is not None:
+            json_data["name"] = self.name
+        if self.description is not None:
+            json_data["description"] = self.description
+        if self.visible is not None:
+            json_data["visible"] = self.visible
+        if self.equipment_kind_id is not None:
+            json_data["equipment_kind_id"] = self.equipment_kind_id
+        if self.equipment_manufacturer_id is not None:
+            json_data["equipment_manufacturer_id"] = self.equipment_manufacturer_id
+
+        return {
+            "method": "PATCH",
+            "url": f"api/v1/equipments/models/{self.equipment_model_id}",
+            "json": {"equipment_model": json_data},
+        }
+
+    def from_response(self, result) -> EquipmentModel:
+        return EquipmentModel.json_parse(result)
+
+
 class EquipmentKind(types.OkDeskBaseClass):
     """
     {
@@ -348,7 +460,7 @@ class GetEquipmentKindsRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!poluchenie-spiska-tipov-oborudovaniya-poluchenie-spiska-tipov-oborudovaniya
 
-    Допустимые параметры запроса: ¶
+    Допустимые параметры запроса:
     Название 	        Тип 	Обязательность 	Описание
     search_string 	    string 	необязательный 	Строка поиска
     page[size] 	        integer необязательный 	Количество элементов на странице
@@ -400,7 +512,7 @@ class CreateEquipmentKindRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!poluchenie-spiska-tipov-oborudovaniya-sozdanie-tipa-oborudovaniya
 
-    Допустимые параметры запроса: ¶
+    Допустимые параметры запроса:
     Название 	        Тип 	            Обязательность 	Описание
     name 	            string 	            обязательный 	Название типа оборудования
     code 	            string 	            обязательный 	Код типа оборудования
