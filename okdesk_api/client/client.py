@@ -1457,6 +1457,38 @@ class OkDeskClient:
             )
         )
 
+    async def update_equipment_model(
+        self,
+        equipment_model_id: int,
+        name: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        visible: typing.Optional[bool] = None,
+        equipment_kind_id: typing.Optional[int] = None,
+        equipment_manufacturer_id: typing.Optional[int] = None,
+    ) -> references.EquipmentModel:
+        """
+        Update equipment model (Обновление модели оборудования)
+
+        :param equipment_model_id: Equipment model id (ID модели оборудования)
+        :param name: Name (Название модели оборудования)
+        :param description: Description (Описание модели оборудования)
+        :param visible: Visible (Видимость модели оборудования)
+        :param equipment_kind_id: Equipment kind id (ID типа оборудования)
+        :param equipment_manufacturer_id: Equipment manufacturer id (ID производителя оборудования)
+        :return: Equipment model (Модель оборудования)
+        """
+
+        return await self(
+            references.UpdateEquipmentModelRequest(
+                equipment_model_id=equipment_model_id,
+                name=name,
+                description=description,
+                visible=visible,
+                equipment_kind_id=equipment_kind_id,
+                equipment_manufacturer_id=equipment_manufacturer_id,
+            )
+        )
+
     async def get_equipment_kinds(
         self,
         search_string: typing.Optional[str] = None,
