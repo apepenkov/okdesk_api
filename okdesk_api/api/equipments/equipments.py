@@ -99,7 +99,7 @@ class Equipment(types.OkDeskBaseClass):
         return instance
 
 
-class test_create_enter(types.ApiRequest):
+class FindEquipmentRequest(types.ApiRequest):
     """
     https://okdesk.ru/apidoc#!oborudovanie-poisk-oborudovaniya
 
