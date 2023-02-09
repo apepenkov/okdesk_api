@@ -133,7 +133,7 @@ class OkDeskClient:
         id_: typing.Optional[int] = None,
         crm_1c_id: typing.Optional[str] = None,
         search_string: typing.Optional[str] = None,
-    ) -> companies.Company:
+    ) -> typing.Optional[companies.Company]:
         """
         Поиск осуществляется по точному совпадению названия или дополнительного названия компании,
         телефона, внутреннего ID, идентификатора объекта в 1С или по подстроке
@@ -1165,7 +1165,7 @@ class OkDeskClient:
         inventory_number: str = None,
         serial_number: str = None,
         search_string: str = None,
-    ) -> equipments.Equipment:
+    ) -> typing.Optional[equipments.Equipment]:
         """
 
         :param inventory_number: Inventory number of equipment (Инвентарный номер оборудования)

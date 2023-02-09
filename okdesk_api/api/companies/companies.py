@@ -246,7 +246,9 @@ class FindCompanyRequest(types.ApiRequest):
             params["search_string"] = self.search_string
         return {"method": "GET", "url": "api/v1/companies/", "params": params}
 
-    def from_response(self, response: dict) -> Company:
+    def from_response(self, response: dict) -> typing.Optional[Company]:
+        if not response:
+            return None
         return Company.json_parse(response)
 
 
