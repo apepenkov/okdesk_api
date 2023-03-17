@@ -258,7 +258,7 @@ class UpdateEquipmentRequest(types.ApiRequest):
 
     def __init__(
         self,
-        equipment_id: str,
+        equipment_id: int,
         equipment_type_code: typing.Optional[str] = None,
         equipment_manufacturer_code: typing.Optional[str] = None,
         equipment_model_code: typing.Optional[str] = None,
@@ -341,7 +341,7 @@ class GetEquipmentRequest(types.ApiRequest):
     equipment_id 	string 	ID оборудования
     """
 
-    def __init__(self, equipment_id: str):
+    def __init__(self, equipment_id: int):
         """
 
         :param equipment_id: ID of equipment (ID оборудования)

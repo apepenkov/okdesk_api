@@ -1228,7 +1228,7 @@ class OkDeskClient:
 
     async def update_equipment(
         self,
-        equipment_id: str,
+        equipment_id: int,
         equipment_type_code: typing.Optional[str] = None,
         equipment_manufacturer_code: typing.Optional[str] = None,
         equipment_model_code: typing.Optional[str] = None,
@@ -1274,7 +1274,7 @@ class OkDeskClient:
             )
         )
 
-    async def get_equipment(self, equipment_id: str) -> equipments.Equipment:
+    async def get_equipment(self, equipment_id: int) -> equipments.Equipment:
         """
 
         :param equipment_id: ID of equipment (ID оборудования)
