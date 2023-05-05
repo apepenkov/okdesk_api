@@ -13,9 +13,11 @@ from ..api import (
     equipments,
     references,
     price_lists,
+    nomenclature,
 )
 from .. import helpers
 import datetime
+from warnings import warn
 
 
 class OkDeskClient:
@@ -1339,7 +1341,6 @@ class OkDeskClient:
         page_from_id: typing.Optional[int] = None,
         page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[references.EquipmentManufacturer]:
-
         """
 
         :param search_string: String with search query (Строка с поисковым запросом)
@@ -1363,7 +1364,6 @@ class OkDeskClient:
         code: str,
         description: typing.Optional[str] = None,
     ) -> references.EquipmentManufacturer:
-
         """
 
         :param name: Name of the manufacturer of the equipment (Название производителя оборудования)
@@ -1412,7 +1412,6 @@ class OkDeskClient:
         page_from_id: typing.Optional[int] = None,
         page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[references.EquipmentModel]:
-
         """
 
         :param search_string: Search string (Искомая подстрока в названии или коде модели оборудования)
@@ -1566,6 +1565,10 @@ class OkDeskClient:
         from_id: typing.Optional[int] = None,
         direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
     ) -> typing.List[price_lists.Service]:
+        warn(
+            "This method is deprecated. Use the method nomenclature_get_price_list_services instead",
+            DeprecationWarning,
+        )
         """
 
         :param price_list_id: Price list id (ID прайс-листа)
@@ -1598,6 +1601,10 @@ class OkDeskClient:
         visible: typing.Optional[bool] = None,
         description: typing.Optional[str] = None,
     ) -> price_lists.Service:
+        warn(
+            "This method is deprecated. Use the method nomenclature_add_service_to_price_list instead",
+            DeprecationWarning,
+        )
         """
 
         :param price_list_id: Price list id (ID прайс-листа)
@@ -1638,6 +1645,10 @@ class OkDeskClient:
         visible: typing.Optional[bool] = None,
         description: typing.Optional[str] = None,
     ) -> price_lists.Service:
+        warn(
+            "This method is deprecated. Use the method nomenclature_edit_service_in_price_list instead",
+            DeprecationWarning,
+        )
         """
 
         :param price_list_id: Price list id (ID прайс-листа)
@@ -1691,5 +1702,292 @@ class OkDeskClient:
                 size=size,
                 from_id=from_id,
                 direction=direction,
+            )
+        )
+
+    # nomenclature
+    async def nomenclature_get_groups(
+        self,
+        search_string: typing.Optional[str] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[nomenclature.Group]:
+        """
+
+        :param search_string: Search string (Строка поиска)
+        :param page_size: Page size (Количество элементов на странице)
+        :param page_from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param page_direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of groups (Массив групп)
+        """
+        return await self(
+            nomenclature.GetGroupsRequest(
+                search_string=search_string,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
+            )
+        )
+
+    async def nomenclature_create_group(
+        self,
+        name: str,
+        code: str,
+        parent_id: typing.Optional[int] = None,
+    ) -> nomenclature.Group:
+        """
+
+        :param name: Name (Название)
+        :param code: Code (Код)
+        :param parent_id: Parent id (ID родителя)
+        :return: Group (Группа)
+        """
+        return await self(
+            nomenclature.CreateGroupRequest(
+                name=name,
+                code=code,
+                parent_id=parent_id,
+            )
+        )
+
+    async def nomenclature_get_group(
+        self,
+        group_id: int,
+    ) -> nomenclature.Group:
+        """
+
+        :param group_id: Group id (ID группы)
+        :return: Group (Группа)
+        """
+        return await self(
+            nomenclature.GetGroupRequest(
+                group_id=group_id,
+            )
+        )
+
+    async def nomenclature_edit_group(
+        self,
+        group_id: int,
+        name: typing.Optional[str] = None,
+        parent_id: typing.Optional[int] = None,
+        active: typing.Optional[bool] = None,
+    ) -> nomenclature.Group:
+        """
+
+        :param group_id: Group id (ID группы)
+        :param name: Name (Название)
+        :param parent_id: Parent id (ID родителя)
+        :param active: Active (Активность)
+
+        :return: Group (Группа)
+        """
+        return await self(
+            nomenclature.EditGroupRequest(
+                group_id=group_id,
+                name=name,
+                parent_id=parent_id,
+                active=active,
+            )
+        )
+
+    async def nomenclature_get_group_positions(
+        self,
+        search_string: typing.Optional[str] = None,
+        code: typing.Optional[str] = None,
+        item_types: typing.Optional[typing.List[str]] = None,
+        group_id: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[nomenclature.Position]:
+        """
+
+        :param search_string: Search string (Строка поиска)
+        :param code: Code (Код)
+        :param item_types: Item types (Типы элементов)
+        :param group_id: Group id (ID группы)
+        :param page_size: Page size (Количество элементов на странице)
+        :param page_from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param page_direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of positions (Массив позиций)
+        """
+        return await self(
+            nomenclature.GetGroupPositionsRequest(
+                search_string=search_string,
+                code=code,
+                item_types=item_types,
+                group_id=group_id,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
+            )
+        )
+
+    async def nomenclature_add_position(
+        self,
+        code: str,
+        name: str,
+        item_type: str,
+        unit: str,
+        description: typing.Optional[str] = None,
+        group_id: typing.Optional[int] = None,
+        vendor_code: typing.Optional[str] = None,
+    ) -> nomenclature.Position:
+        """
+
+        :param code: Code (Код)
+        :param name: Name (Название)
+        :param item_type: Item type (Тип элемента)
+        :param unit: Unit (Единица измерения)
+        :param description: Description (Описание)
+        :param group_id: Group id (ID группы)
+        :param vendor_code: Vendor code (Артикул)
+        :return: Position (Позиция)
+        """
+        return await self(
+            nomenclature.AddPositionRequest(
+                code=code,
+                name=name,
+                item_type=item_type,
+                unit=unit,
+                description=description,
+                group_id=group_id,
+                vendor_code=vendor_code,
+            )
+        )
+
+    async def nomenclature_get_position(
+        self,
+        position_id: int,
+    ) -> nomenclature.Position:
+        """
+
+        :param position_id: Position id (ID позиции)
+        :return: Position (Позиция)
+        """
+        return await self(
+            nomenclature.GetPositionRequest(
+                position_id=position_id,
+            )
+        )
+
+    async def nomenclature_edit_position(
+        self,
+        position_id: int,
+        name: typing.Optional[str] = None,
+        item_type: typing.Optional[str] = None,
+        unit: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        group_id: typing.Optional[int] = None,
+        vendor_code: typing.Optional[str] = None,
+        active: typing.Optional[bool] = None,
+    ) -> nomenclature.Position:
+        """
+
+        :param position_id: Position id (ID позиции)
+        :param name: Name (Название)
+        :param item_type: Item type (Тип элемента)
+        :param unit: Unit (Единица измерения)
+        :param description: Description (Описание)
+        :param group_id: Group id (ID группы)
+        :param vendor_code: Vendor code (Артикул)
+        :param active: Active (Активность)
+        :return: Position (Позиция)
+        """
+        return await self(
+            nomenclature.EditNomenclaturePositionRequest(
+                position_id=position_id,
+                name=name,
+                item_type=item_type,
+                unit=unit,
+                description=description,
+                group_id=group_id,
+                vendor_code=vendor_code,
+                active=active,
+            )
+        )
+
+    async def nomenclature_get_price_list_services(
+        self,
+        price_list_id: int,
+        search_string: typing.Optional[str] = None,
+        item_types: typing.Optional[list] = None,
+        group_id: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        page_from_id: typing.Optional[int] = None,
+        page_direction: typing.Optional[typing.Literal["reverse", "forward"]] = None,
+    ) -> typing.List[nomenclature.PriceListService]:
+        """
+
+        :param price_list_id: Price list id (ID прайс-листа)
+        :param search_string: Search string (Строка поиска)
+        :param item_types: Item types (Типы элементов)
+        :param group_id: Group id (ID группы)
+        :param page_size: Page size (Количество элементов на странице)
+        :param page_from_id: Page from id (ID элемента, с которого начинать выборку)
+        :param page_direction: Page direction (Направление выборки ("reverse", "forward"))
+        :return: Array of services (Массив услуг)
+        """
+        return await self(
+            nomenclature.GetPriceListServicesRequest(
+                price_list_id=price_list_id,
+                search_string=search_string,
+                item_types=item_types,
+                group_id=group_id,
+                page_size=page_size,
+                page_from_id=page_from_id,
+                page_direction=page_direction,
+            )
+        )
+
+    async def nomenclature_add_service_to_price_list(
+        self,
+        price_list_id: int,
+        nomenclature_item_id: int,
+        price: float,
+        nds: int,
+    ) -> nomenclature.PriceListService:
+        """
+
+        :param price_list_id: Price list id (ID прайс-листа)
+        :param nomenclature_item_id: Nomenclature item id (ID элемента номенклатуры)
+        :param price: Price (Цена)
+        :param nds: Nds (НДС)
+        :return: Service (Услуга)
+        """
+        return await self(
+            nomenclature.AddPriceListServiceRequest(
+                price_list_id=price_list_id,
+                nomenclature_item_id=nomenclature_item_id,
+                price=price,
+                nds=nds,
+            )
+        )
+
+    async def nomenclature_edit_service_in_price_list(
+        self,
+        price_list_id: int,
+        service_id: int,
+        price: typing.Optional[float] = None,
+        nds: typing.Optional[int] = None,
+        visible: typing.Optional[bool] = None,
+    ) -> nomenclature.PriceListService:
+        """
+
+        :param price_list_id: Price list id (ID прайс-листа)
+        :param service_id: Service id (ID услуги)
+        :param price: Price (Цена)
+        :param nds: Nds (НДС)
+        :param visible: Visible (Видимость)
+        :return: Service (Услуга)
+        """
+        return await self(
+            nomenclature.EditPriceListServiceRequest(
+                price_list_id=price_list_id,
+                service_id=service_id,
+                price=price,
+                nds=nds,
+                visible=visible,
             )
         )
