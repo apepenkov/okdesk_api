@@ -128,6 +128,10 @@ class OkDeskClient:
                                 f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
                             )
                         if resp.status >= 500:
+                            try:
+                                json_resp = await resp.json()
+                            except Exception:
+                                json_resp = {}
                             last_exception = OkDeskError(
                                 json_resp.get("errors", [f"Unknown error - server returned {resp.status}"])
                             )
