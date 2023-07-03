@@ -127,17 +127,15 @@ class OkDeskClient:
                             raise ValueError(
                                 f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
                             )
-                        json_resp = await resp.json()
                         if resp.status >= 500:
-                            if is_last_retry:
-                                raise OkDeskError(
-                                    json_resp.get("errors", ["Unknown error"])
-                                )
                             last_exception = OkDeskError(
-                                json_resp.get("errors", ["Unknown error"])
+                                json_resp.get("errors", [f"Unknown error - server returned {resp.status}"])
                             )
+                            if is_last_retry:
+                                raise last_exception
                             await asyncio.sleep(self._auto_retry_delay)
                             continue
+                        json_resp = await resp.json()
                         if resp.status >= 400:
                             raise OkDeskError(json_resp.get("errors", ["Unknown error"]))
                         return json_resp
