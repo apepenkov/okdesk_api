@@ -106,6 +106,7 @@ class OkDeskClient:
                 is_last_retry = retry_num == self._auto_retry_count
                 try:
                     async with session.request(method, url, **kwargs) as resp:
+
                         if self._debug:
                             to_print = f"Request: {method} {url}"
                             params_r = kwargs.get("params").copy()
@@ -121,12 +122,6 @@ class OkDeskClient:
                             to_print += f"\nContent: {await resp.text()}"
                             print(to_print)
 
-                        if resp.content_type != "application/json":
-                            if allow_non_json:
-                                return {}
-                            raise ValueError(
-                                f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
-                            )
                         if resp.status >= 500:
                             try:
                                 json_resp = await resp.json()
@@ -139,6 +134,15 @@ class OkDeskClient:
                                 raise last_exception
                             await asyncio.sleep(self._auto_retry_delay)
                             continue
+
+                        if resp.content_type != "application/json":
+                            if allow_non_json:
+                                return {}
+                            raise ValueError(
+                                f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
+                            )
+
+
                         json_resp = await resp.json()
                         if resp.status >= 400:
                             raise OkDeskError(json_resp.get("errors", ["Unknown error"]))
