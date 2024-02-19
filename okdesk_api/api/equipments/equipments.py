@@ -140,10 +140,10 @@ class FindEquipmentRequest(types.ApiRequest):
             "params": params,
         }
 
-    def from_response(self, result) -> typing.Optional[Equipment]:
+    def from_response(self, result) -> typing.List[Equipment]:
         if not result:
-            return None
-        return Equipment.json_parse(result)
+            return []
+        return [Equipment.json_parse(item) for item in result]
 
 
 class CreateEquipmentRequest(types.ApiRequest):

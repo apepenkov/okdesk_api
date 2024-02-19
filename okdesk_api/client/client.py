@@ -1207,7 +1207,7 @@ class OkDeskClient:
         inventory_number: str = None,
         serial_number: str = None,
         search_string: str = None,
-    ) -> typing.Optional[equipments.Equipment]:
+    ) -> typing.List[equipments.Equipment]:
         """
 
         :param inventory_number: Inventory number of equipment (Инвентарный номер оборудования)
