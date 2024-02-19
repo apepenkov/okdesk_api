@@ -141,9 +141,14 @@ class FindEquipmentRequest(types.ApiRequest):
         }
 
     def from_response(self, result) -> typing.List[Equipment]:
+        # why does api return a single dict NOT within a list if only 0/1 items are found?
         if not result:
             return []
-        return [Equipment.json_parse(item) for item in result]
+        return (
+            [Equipment.json_parse(item) for item in result]
+            if isinstance(result, list)
+            else [Equipment.json_parse(result)]
+        )
 
 
 class CreateEquipmentRequest(types.ApiRequest):
